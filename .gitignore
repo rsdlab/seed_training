@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# colcon (ワークスペース直下で誤ってビルドした場合)
+build/
+install/
+log/
+
+# エディタ・OS
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
