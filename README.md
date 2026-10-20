@@ -412,14 +412,6 @@ cd ~/colcon_ws/src/seed_robot_ros2_pkg/robots
 git clone -b ros2-jazzy https://github.com/rsdlab/noid_lifter_mover.git
 ```
 
-### 7-5. ビルド
-
-```bash
-cd ~/colcon_ws
-colcon build --symlink-install
-source install/setup.bash
-```
-
 ### 7-6. udev設定（実機を動かす場合のみ）
 
 **参照：Vol.2 p.10**
@@ -452,8 +444,9 @@ touch gz_ros2_control/gz_ros2_control_demos/COLCON_IGNORE
 ### 7-8. 移動機能パッケージをクローン
 
 ```bash
-cd ~/colcon_ws/src
+cd ~/
 git clone -b ros2-jazzy https://github.com/rsdlab/Mobility_Function.git
+ln -s ~/Mobility_Function/Seed-noid ~/colcon_ws/src/Mobility_Function
 ```
 
 ### 7-9. 人協働マニピュレーションパッケージをクローン
@@ -463,8 +456,7 @@ git clone -b ros2-jazzy https://github.com/rsdlab/Mobility_Function.git
 ```bash
 cd ~/
 git clone -b ros2-jazzy https://github.com/rsdlab/Human_Collaboration_System.git
-cd Human_Collaboration_System/
-cp Seed-noid/* ~/colcon_ws/src
+ln -s ~/Human_Collaboration_System/Seed-noid ~/colcon_ws/src/Mobility_Function
 ```
 
 ### 7-10. ビルド
@@ -473,6 +465,20 @@ cp Seed-noid/* ~/colcon_ws/src
 cd ~/colcon_ws
 colcon build --symlink-install
 source install/setup.bash
+```
+### エラー対処法
+以下のようなエラーが表示された場合
+```bash
+ERROR: the following packages/stacks could not have their rosdep keys resolved
+to system dependencies:
+motion_player: Cannot locate rosdep definition for [controller_msgs]
+management_system: Cannot locate rosdep definition for [ament_python]
+…
+```
+以下のコマンドを実行
+```bash
+cd ~/colcon_ws
+rosdep install --from-paths src --ignore-src -r –y --skip-keys "controller_msgs ament_python"
 ```
 
 ---
